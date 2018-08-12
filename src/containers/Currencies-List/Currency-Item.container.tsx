@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { CurrencyContainerComponent } from '../../components/Currency-Container/Currency-Container.component';
+import { RemoveButtonComponent } from '../../components/Remove-Button/Remove-Button.component';
+import { RowComponent } from '../../components/Row/row.component';
+import { TextComponent } from '../../components/Text/Text.component';
+import { TitleComponent } from '../../components/Title/Title.component';
 import { CurrenciesPayload } from '../../models/currencies-payload.model';
 import { AppState } from '../../reducers';
 import { removeCurrency } from '../../store/currencies.actions';
@@ -20,15 +25,32 @@ interface DispatchProps {
 
 function CurrencyItem(props: OwnProps & DispatchProps & StoreProps) {
   const remove = () => props.removeCurrency(props.currency);
-  return !props.currencyInfo ? null : (
-    <div>
-      <div>Name: {props.currencyInfo.currency}</div>
-      <div>Code: {props.currencyInfo.code}</div>
-      <div>Buy exchange rate: {props.currencyInfo.bid}</div>
-      <div>Sell exchange rate: {props.currencyInfo.ask}</div>
-      <div onClick={remove}>Remove from favourites</div>
-    </div>
-  );
+
+  if (props.currencyInfo) {
+    const { currency, code, bid, ask } = props.currencyInfo;
+
+    return (
+      <CurrencyContainerComponent>
+        <RowComponent>
+          <TitleComponent>{currency}</TitleComponent>
+        </RowComponent>
+        <RowComponent>
+          <TextComponent>Code: {code}</TextComponent>
+        </RowComponent>
+        <RowComponent>
+          <TextComponent>Buy exchange rate: {bid}</TextComponent>
+        </RowComponent>
+        <RowComponent>
+          <TextComponent>Sell exchange rate: {ask}</TextComponent>
+        </RowComponent>
+        <RemoveButtonComponent onClick={remove}>
+          <TextComponent>Remove</TextComponent>
+        </RemoveButtonComponent>
+      </CurrencyContainerComponent>
+    );
+  }
+
+  return null;
 }
 
 const mapStateToProps = (state: AppState, ownProps: OwnProps): StoreProps => ({
