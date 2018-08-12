@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import { CurrenciesPayload } from '../models/currencies-payload.model';
 
-interface SelectOptions {
+export interface SelectOptions {
   value: string;
   label: string;
 }
@@ -19,17 +19,27 @@ const mapCurrenciesToSelectOptions = R.pipe(
   mapToSelectOptions,
 );
 
+const sort = R.sortBy(R.identity) as any;
+
+
+const findCurrency = (curr: string) => R.find((currency: CurrenciesPayload) => currency.code === curr);
+
 const filterWithFavourites = R.differenceWith((option: SelectOptions, code: string) => option.value === code);
 
 export const favouritesSelector = createSelector(
   getFavourites,
-  R.identity,
+  sort,
 );
 
 export const selectOptionsSelector = createSelector(
   mapCurrenciesToSelectOptions,
   favouritesSelector,
   filterWithFavourites,
+);
+
+export const getCurrencySelector = (curr: string) => createSelector(
+  getCurrencies,
+  findCurrency(curr),
 );
 
 

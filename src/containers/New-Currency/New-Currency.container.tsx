@@ -6,10 +6,10 @@ import { bindActionCreators } from 'redux';
 import { SelectComponent } from '../../components/Select/Select.component';
 import { AppState } from '../../reducers';
 import { addCurrency, getCurrencies } from '../../store/currencies.actions';
-import { selectOptionsSelector } from '../../store/currencies.selectors';
+import { SelectOptions, selectOptionsSelector } from '../../store/currencies.selectors';
 
 interface StoreProps {
-  currencies: any[];
+  currencies: SelectOptions[];
 }
 
 interface DispatchProps {
@@ -27,12 +27,10 @@ export class NewCurrency extends Component<StoreProps & DispatchProps> {
     this.props.getCurrencies();
   }
 
-  public componentWillUpdate(props: any) {
-    console.log(props);
-  }
-
   public handleSelectCurrency(item: string) {
-    this.props.addCurrency(item);
+    if (item) {
+      this.props.addCurrency(item);
+    }
   }
 
   public render() {

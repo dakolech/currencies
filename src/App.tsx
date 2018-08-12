@@ -1,12 +1,16 @@
 import * as React from 'react';
 import './App.css';
 
-import { NewCurrencyComponent } from './containers/new-currency/new-currency.container';
+import { CurrenciesListComponent } from './containers/Currencies-List/Currencies-List.container';
+import { NewCurrencyComponent } from './containers/New-Currency/New-Currency.container';
 
 class App extends React.Component {
   public render() {
     return (
-      <NewCurrencyComponent/>
+      <div>
+        <NewCurrencyComponent/>
+        <CurrenciesListComponent/>
+      </div>
     );
   }
 }
