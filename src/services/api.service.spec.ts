@@ -5,12 +5,12 @@ import { Observable, of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { api } from './api.service';
 
-interface IMethod {
+interface Method {
   name: 'get'|'post'|'put'|'patch'|'delete'|'getJSON';
   hasBody: boolean;
 }
 
-const methods: IMethod[] = [{
+const methods: Method[] = [{
   hasBody: false,
   name: 'get',
 }, {
@@ -30,7 +30,7 @@ const methods: IMethod[] = [{
   name: 'getJSON',
 }];
 
-const mockAjax = pipe<IMethod[], any, any>(
+const mockAjax = pipe<Method[], any, any>(
   pluck('name'),
   reduce((acc, method: string) => ({ ...acc, [method]: of(method) }), {}),
 )(methods);

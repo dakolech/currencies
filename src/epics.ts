@@ -1,3 +1,4 @@
 import { combineEpics } from 'redux-observable';
+import { getCurrenciesEpic } from './store/currencies.epics';
 
-export const epics = combineEpics();
+export const epics = combineEpics(getCurrenciesEpic);

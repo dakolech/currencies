@@ -48,7 +48,9 @@ export function configureStore() {
     load(store);
   }
 
+  epicMiddleware.run(epics);
+
   return store;
 }
 
-epicMiddleware.run(epics);
+
