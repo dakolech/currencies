@@ -1,3 +1,5 @@
+import 'bootstrap/dist/css/bootstrap-reboot.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import { ConnectedRouter } from 'connected-react-router';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
