@@ -5,7 +5,8 @@ import { connect, Dispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { SelectComponent } from '../../components/Select/Select.component';
 import { AppState } from '../../reducers';
-import { getCurrencies } from '../../store/currencies.actions';
+import { addCurrency, getCurrencies } from '../../store/currencies.actions';
+import { selectOptionsSelector } from '../../store/currencies.selectors';
 
 interface StoreProps {
   currencies: any[];
@@ -13,6 +14,7 @@ interface StoreProps {
 
 interface DispatchProps {
   getCurrencies: () => void;
+  addCurrency: (curr: string) => void;
 }
 
 export class NewCurrency extends Component<StoreProps & DispatchProps> {
@@ -25,8 +27,12 @@ export class NewCurrency extends Component<StoreProps & DispatchProps> {
     this.props.getCurrencies();
   }
 
+  public componentWillUpdate(props: any) {
+    console.log(props);
+  }
+
   public handleSelectCurrency(item: string) {
-    console.log(item);
+    this.props.addCurrency(item);
   }
 
   public render() {
@@ -40,12 +46,13 @@ export class NewCurrency extends Component<StoreProps & DispatchProps> {
   }
 }
 
-const mapStateToProps = (state: AppState): StoreProps => ({
-  currencies: R.pathOr([], [ 'currencies', 'values' ], state),
+
+const mapStateToProps: (state: AppState) => StoreProps = R.applySpec({
+  currencies: selectOptionsSelector,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => bindActionCreators(
-  { getCurrencies },
+  { getCurrencies, addCurrency },
   dispatch,
 );
 

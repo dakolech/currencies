@@ -20,6 +20,7 @@ export function SelectComponent(props: Props) {
         value={currentValue}
         options={options}
         onChange={onChange}
+        placeholder="Select currency which you want to observe"
       />
     </SelectWrapper>
   );
